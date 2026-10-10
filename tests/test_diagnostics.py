@@ -113,3 +113,31 @@ def test_ai_requires_key_before_any_query(monkeypatch):
     monkeypatch.setattr(dotenv, 'load_dotenv', Mock())
     monkeypatch.delenv('OPENAI_API_KEY', raising=False)
     assert module.main(['--ai']) == 2
+
+
+@pytest.mark.parametrize('status,code,expected', [
+    (401, 'invalid_api_key', 'invalid_api_key'),
+    (429, 'insufficient_quota', 'insufficient_quota'),
+    (429, 'rate_limit_exceeded', 'rate_limit'),
+    (403, None, 'access_or_model'),
+    (500, 'secret-response-content', 'api_error'),
+])
+def test_safe_error_details(status, code, expected):
+    reply = Mock(status_code=status, json=Mock(return_value={
+        'error': {'code': code, 'message': 'DO-NOT-EXPOSE-THIS-SECRET'}}))
+    error = module.api_error(reply)
+    assert error.code == expected
+    assert 'DO-NOT-EXPOSE' not in str(error)
+    assert 'secret-response-content' not in str(error)
+
+
+def test_cli_reports_safe_auth_error(monkeypatch, capsys):
+    import dotenv
+    import json
+    monkeypatch.setattr(dotenv, 'load_dotenv', Mock())
+    monkeypatch.setenv('OPENAI_API_KEY', 'fake-test-key')
+    monkeypatch.setattr(module, 'explain', Mock(side_effect=module.AIServiceError(401, 'invalid_api_key', 'Key rejected.')))
+    assert module.main(['--demo', '--ai']) == 2
+    report = json.loads(capsys.readouterr().out)
+    assert report['ai_error']['code'] == 'invalid_api_key'
+    assert report['findings']

@@ -76,6 +76,37 @@ def diagnose(snapshot, expect_streaming=False):
 
 
 
+class AIServiceError(RuntimeError):
+    """Only locally authored messages may be shown to the user."""
+    def __init__(self, status, code, message):
+        super().__init__(f'OpenAI HTTP {status}: {message}')
+        self.status = status
+        self.code = code
+
+
+def api_error(response):
+    try:
+        body = response.json()
+        error = body.get('error', {}) if isinstance(body, dict) else {}
+        code = error.get('code') if isinstance(error, dict) else None
+    except (ValueError, TypeError):
+        code = None
+    if code == 'invalid_api_key' or response.status_code == 401:
+        return AIServiceError(response.status_code, 'invalid_api_key',
+            'API key rejected. Replace it with scripts/configure_openai.py. '
+            'If OPENAI_API_KEY is exported in your Terminal, unset it so the local .env key is used.')
+    if code == 'insufficient_quota':
+        return AIServiceError(response.status_code, code,
+            'API quota is unavailable. Check API project billing, credits and usage limits.')
+    if response.status_code == 429:
+        return AIServiceError(429, 'rate_limit', 'Request limit reached. Wait and retry.')
+    if response.status_code in (403, 404):
+        return AIServiceError(response.status_code, 'access_or_model',
+            'Check API project permissions and access to the selected model.')
+    return AIServiceError(response.status_code, 'api_error',
+        'Request failed. Check request compatibility or retry if the service is unavailable.')
+
+
 def explain(report, api_key, model, post=None):
     """One bounded Responses API request; no tools or command execution."""
     import requests
@@ -108,7 +139,7 @@ def explain(report, api_key, model, post=None):
                                   'strict': True, 'schema': schema}}},
         timeout=(10, 60), allow_redirects=False)
     if response.status_code != 200:
-        raise RuntimeError(f'OpenAI HTTP {response.status_code}; check API access, billing and model permissions')
+        raise api_error(response)
     body = response.json()
     if body.get('status') != 'completed':
         raise RuntimeError('OpenAI response was incomplete')
@@ -162,7 +193,11 @@ def main(argv=None):
         except Exception as error:
             report['ai_status'] = 'failed'
             report['ai_error_type'] = type(error).__name__
-            print('AI explanation failed; check API access/billing/model or retry later. Rule evidence is retained.', file=sys.stderr)
+            if isinstance(error, AIServiceError):
+                report['ai_error'] = {'http_status': error.status, 'code': error.code, 'message': str(error)}
+                print(str(error), file=sys.stderr)
+            else:
+                print('AI explanation failed; response or connection could not be validated. Rule evidence is retained.', file=sys.stderr)
             ai_failed = True
     print(json.dumps(report, indent=2, default=str))
     return 2 if snapshot.get('errors') or ai_failed else 0

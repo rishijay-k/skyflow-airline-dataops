@@ -54,8 +54,12 @@ Exit code 0 means a report was produced; the report can still contain ERROR find
 python -m pytest -q
 ```
 
-Current suite: 41 offline cases. CI requires no OpenAI key; API success/error responses are mocked. A real successful `--ai` run is still required to complete Step 29 acceptance.
+Current suite: 47 offline cases. CI requires no OpenAI key; API success/error responses are mocked. A real successful `--ai` run is still required to complete Step 29 acceptance.
 
 Sources:
 - https://developers.openai.com/api/docs/guides/structured-outputs?api-mode=responses
 - https://developers.openai.com/api/docs/models/gpt-4.1-mini
+
+## API authentication errors
+
+A 401 / invalid_api_key means the loaded key was rejected. Run `python scripts/configure_openai.py` to replace it, then `unset OPENAI_API_KEY` in Terminal before running diagnostics so the `.env` value is used. Exported environment variables take precedence over `.env`. The program shows only locally authored error guidance and recognized error codes, never raw API error messages or key values.

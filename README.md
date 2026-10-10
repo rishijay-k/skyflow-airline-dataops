@@ -31,7 +31,7 @@ The streaming table feeds operational views; it is not currently merged into the
 - Streaming: publish events to Pub/Sub, write them to BigQuery, and acknowledge messages after accepted writes.
 - Observability: record batch outcomes, duration, row counts and error messages in BigQuery.
 - Terraform: import four existing datasets plus the topic and subscription, with lifecycle deletion guards and a zero-change plan check.
-- Tests: 41 offline cases covering generation, quality gates, write failures, acknowledgements, batch logging and streaming exit status.
+- Tests: 47 offline cases covering generation, quality gates, write failures, acknowledgements, batch logging and streaming exit status.
 
 The existing cloud pipeline was verified during development. Offline tests mock Google clients and do not prove current cloud health or execute the transformation SQL.
 
@@ -46,7 +46,7 @@ python -m pip install -r requirements.txt
 python -m pytest -q
 ```
 
-Expected: `41 passed`. The dependency file records the development environment. GitHub Actions installs it on a fresh Linux runner and checks dependency compatibility before running tests.
+Expected: `47 passed`. The dependency file records the development environment. GitHub Actions installs it on a fresh Linux runner and checks dependency compatibility before running tests.
 
 ## Existing Google Cloud environment
 
