@@ -1,0 +1,36 @@
+.venv/
+__pycache__/
+*.pyc
+.env
+.DS_Store
+.pytest_cache/
+logs/*.log
+data/*.jsonl
+data/*.csv
+
+# Local credentials and environment overrides
+.env.*
+!.env.example
+credentials*.json
+*service-account*.json
+application_default_credentials.json
+*.pem
+*.key
+
+# Local outputs and caches
+logs/
+data/**/*.jsonl
+data/**/*.csv
+.coverage
+htmlcov/
+
+# Terraform state and private inputs (keep .terraform.lock.hcl)
+**/.terraform/
+*.tfstate
+*.tfstate.*
+*.tfplan
+*plan*.json
+*.tfvars
+*.tfvars.json
+crash.log
+crash.*.log
