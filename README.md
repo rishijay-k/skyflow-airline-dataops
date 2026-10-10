@@ -2,7 +2,7 @@
 
 A portfolio project that processes synthetic airline events through batch and streaming pipelines on Google Cloud. Python handles generation, ingestion and operational logging; BigQuery provides RAW, CLEAN, CURATED and monitoring layers; Pub/Sub transports streaming events.
 
-This is an independent learning project using synthetic data. It is not affiliated with KLM or another airline. An AI diagnostic agent and CI/CD are planned, not implemented.
+This is an independent learning project using synthetic data. It is not affiliated with any airline or another airline. An AI diagnostic agent and CI/CD are planned, not implemented.
 
 ## Architecture
 
