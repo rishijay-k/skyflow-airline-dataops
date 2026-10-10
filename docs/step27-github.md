@@ -29,6 +29,6 @@ The source/configuration and `.terraform.lock.hcl` should be committed. Never fo
 
 ## Publishing is a separate step
 
-No GitHub repository has been created or pushed by this preparation step. Choose the repository name and public/private visibility before publishing. A suitable name is `skyflow-airline-dataops`.
+Published publicly at https://github.com/rishijay-k/skyflow-airline-dataops. The repository name and visibility were approved before publishing.
 
-The README describes the implemented scope. CI/CD and AI diagnostics are explicitly marked as planned. Do not describe them as completed features yet.
+The README describes the implemented scope. Continuous integration is implemented in Step 28; automated deployment and AI diagnostics remain planned.

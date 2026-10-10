@@ -1,8 +1,10 @@
 # SkyFlow .::. Airline DataOps Platform
 
+[![SkyFlow CI](https://github.com/rishijay-k/skyflow-airline-dataops/actions/workflows/ci.yml/badge.svg)](https://github.com/rishijay-k/skyflow-airline-dataops/actions/workflows/ci.yml)
+
 A portfolio project that processes synthetic airline events through batch and streaming pipelines on Google Cloud. Python handles generation, ingestion and operational logging; BigQuery provides RAW, CLEAN, CURATED and monitoring layers; Pub/Sub transports streaming events.
 
-This is an independent learning project using synthetic data. It is not affiliated with any airline or another airline. An AI diagnostic agent and CI/CD are planned, not implemented.
+This is an independent learning project using synthetic data. It is not affiliated with any airline or another airline. GitHub Actions runs offline tests and Terraform validation on pushes and pull requests. An AI diagnostic agent and automated deployment are planned, not implemented.
 
 ## Architecture
 
@@ -44,7 +46,7 @@ python -m pip install -r requirements.txt
 python -m pytest -q
 ```
 
-Expected: `26 passed`. The dependency file records the existing development environment; a clean install in CI is still pending.
+Expected: `26 passed`. The dependency file records the development environment. GitHub Actions installs it on a fresh Linux runner and checks dependency compatibility before running tests.
 
 ## Existing Google Cloud environment
 
@@ -120,7 +122,7 @@ docs/             Verification and GitHub preparation notes
 
 ## Next milestones
 
-1. Review and publish the GitHub repository.
-2. Add GitHub Actions for offline tests and configuration checks.
-3. Build the AI diagnostic agent.
-4. Finish the demo and portfolio documentation.
+1. Build the AI diagnostic agent.
+2. Finish the demo and portfolio documentation.
+
+See [CI guide](docs/step28-ci.md) for automatic checks and their scope.
