@@ -1,4 +1,4 @@
-# SkyFlow — Airline DataOps Platform
+# SkyFlow .::. Airline DataOps Platform
 
 A portfolio project that processes synthetic airline events through batch and streaming pipelines on Google Cloud. Python handles generation, ingestion and operational logging; BigQuery provides RAW, CLEAN, CURATED and monitoring layers; Pub/Sub transports streaming events.
 
