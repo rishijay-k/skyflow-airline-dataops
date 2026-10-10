@@ -4,7 +4,7 @@
 
 A portfolio project that processes synthetic airline events through batch and streaming pipelines on Google Cloud. Python handles generation, ingestion and operational logging; BigQuery provides RAW, CLEAN, CURATED and monitoring layers; Pub/Sub transports streaming events.
 
-This is an independent learning project using synthetic data. It is not affiliated with any airline or another airline. GitHub Actions runs offline tests and Terraform validation on pushes and pull requests. An AI diagnostic agent and automated deployment are planned, not implemented.
+This is an independent learning project using synthetic data. It is not affiliated with any airline or another airline. GitHub Actions runs offline tests and Terraform validation on pushes and pull requests. A read-only OpenAI diagnostic workflow is implemented; live OpenAI acceptance is pending API credentials. Automated deployment remains planned.
 
 ## Architecture
 
@@ -31,7 +31,7 @@ The streaming table feeds operational views; it is not currently merged into the
 - Streaming: publish events to Pub/Sub, write them to BigQuery, and acknowledge messages after accepted writes.
 - Observability: record batch outcomes, duration, row counts and error messages in BigQuery.
 - Terraform: import four existing datasets plus the topic and subscription, with lifecycle deletion guards and a zero-change plan check.
-- Tests: 26 offline cases covering generation, quality gates, write failures, acknowledgements, batch logging and streaming exit status.
+- Tests: 41 offline cases covering generation, quality gates, write failures, acknowledgements, batch logging and streaming exit status.
 
 The existing cloud pipeline was verified during development. Offline tests mock Google clients and do not prove current cloud health or execute the transformation SQL.
 
@@ -46,7 +46,7 @@ python -m pip install -r requirements.txt
 python -m pytest -q
 ```
 
-Expected: `26 passed`. The dependency file records the development environment. GitHub Actions installs it on a fresh Linux runner and checks dependency compatibility before running tests.
+Expected: `41 passed`. The dependency file records the development environment. GitHub Actions installs it on a fresh Linux runner and checks dependency compatibility before running tests.
 
 ## Existing Google Cloud environment
 
@@ -118,11 +118,15 @@ docs/             Verification and GitHub preparation notes
 - `records_processed` records the final RAW row count, not an independently measured per-run count.
 - The streaming verification checks total row-count growth, not a unique test-run ID, so concurrent traffic can affect its result.
 - Terraform adopts datasets and Pub/Sub resources; individual tables/views and IAM are not independently managed in this step.
-- Automated deployment, fresh-environment provisioning and AI diagnostics remain future work.
+- Automated deployment and fresh-environment provisioning remain future work. Live OpenAI verification is pending credentials; diagnostics do not perform autonomous remediation.
 
 ## Next milestones
 
-1. Build the AI diagnostic agent.
+1. Complete live OpenAI verification of the diagnostic workflow.
 2. Finish the demo and portfolio documentation.
 
 See [CI guide](docs/step28-ci.md) for automatic checks and their scope.
+
+## Diagnostic workflow
+
+See [Step 29 setup](docs/step29-diagnostics.md). Run `python src/agent/diagnose.py --demo` for a synthetic report, or omit `--demo` to read live BigQuery monitoring. Add `--ai` after configuring a private API key to obtain OpenAI explanations.
