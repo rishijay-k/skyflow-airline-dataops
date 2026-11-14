@@ -141,3 +141,36 @@ def test_cli_reports_safe_auth_error(monkeypatch, capsys):
     report = json.loads(capsys.readouterr().out)
     assert report['ai_error']['code'] == 'invalid_api_key'
     assert report['findings']
+
+
+@pytest.mark.parametrize('finish', ['stop', 'length'])
+def test_abacus_chat_response(finish):
+    import json
+    data = {'summary': 'demo', 'hypotheses': [], 'suggested_checks': [], 'limitations': []}
+    post = Mock(return_value=Mock(status_code=200, json=Mock(return_value={
+        'choices': [{'finish_reason': finish, 'message': {'content': json.dumps(data)}}]})))
+    if finish == 'stop':
+        assert module.explain(report(), 'fake-abacus-key', 'route-llm', post, provider='abacus') == data
+    else:
+        with pytest.raises(RuntimeError, match='incomplete'):
+            module.explain(report(), 'fake-abacus-key', 'route-llm', post, provider='abacus')
+    assert post.call_args.args[0] == 'https://routellm.abacus.ai/v1/chat/completions'
+    payload = post.call_args.kwargs['json']
+    assert payload['max_tokens'] == 1000
+    assert payload['response_format']['json_schema']['strict'] is True
+    assert 'tools' not in payload and 'abacus_tools' not in payload
+    assert post.call_args.kwargs['allow_redirects'] is False
+
+
+def test_abacus_never_falls_back_to_openai_key(monkeypatch):
+    import dotenv
+    monkeypatch.setattr(dotenv, 'load_dotenv', Mock())
+    monkeypatch.delenv('ABACUS_API_KEY', raising=False)
+    monkeypatch.setenv('OPENAI_API_KEY', 'fake-openai-key')
+    assert module.main(['--demo', '--ai', '--provider', 'abacus']) == 2
+
+
+def test_abacus_auth_guidance_is_provider_specific():
+    error = module.api_error(Mock(status_code=401), provider='abacus')
+    assert 'configure_abacus.py' in str(error)
+    assert 'OpenAI' not in str(error)

@@ -54,7 +54,7 @@ Exit code 0 means a report was produced; the report can still contain ERROR find
 python -m pytest -q
 ```
 
-Current suite: 47 offline cases. CI requires no OpenAI key; API success/error responses are mocked. A real successful `--ai` run is still required to complete Step 29 acceptance.
+Current suite: 51 offline cases. CI requires no OpenAI key; API success/error responses are mocked. A real successful `--ai` run is still required to complete Step 29 acceptance.
 
 Sources:
 - https://developers.openai.com/api/docs/guides/structured-outputs?api-mode=responses
@@ -63,3 +63,7 @@ Sources:
 ## API authentication errors
 
 A 401 / invalid_api_key means the loaded key was rejected. Run `python scripts/configure_openai.py` to replace it, then `unset OPENAI_API_KEY` in Terminal before running diagnostics so the `.env` value is used. Exported environment variables take precedence over `.env`. The program shows only locally authored error guidance and recognized error codes, never raw API error messages or key values.
+
+## Abacus verification update
+
+The Abacus adapter is the verified provider for this project; demo and live-monitoring outputs were confirmed from user screenshots on November 15, 2026. See [Abacus setup](step29-abacus.md). OpenAI live acceptance remains unverified.
