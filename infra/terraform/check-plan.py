@@ -17,4 +17,4 @@ for resource in resources:
     change = resource["change"]
     if change["actions"] != ["no-op"] or change.get("importing"):
         sys.exit("STOP: unexpected changes to " + resource["address"])
-print("PASS: all six resources are imported; 0 add, 0 change, 0 destroy.")
+print("PASS: all six resources are managed; 0 add, 0 change, 0 destroy.")

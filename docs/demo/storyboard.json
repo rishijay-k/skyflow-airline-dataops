@@ -1,0 +1,144 @@
+{
+  "slides": [
+    {
+      "eyebrow": "01 / The project",
+      "title": "Airline events. Traceable outcomes.",
+      "rows": [
+        [
+          "Batch",
+          "1,000 synthetic events across 10 airports"
+        ],
+        [
+          "Streaming",
+          "Pub/Sub to BigQuery with message traceability"
+        ],
+        [
+          "Diagnostics",
+          "Rules plus Abacus explanations for human review"
+        ]
+      ],
+      "note": "Independent portfolio project • Google Cloud: skyflow-511113 / asia-south1",
+      "narration": "This is SkyFlow, a complete airline DataOps portfolio demonstration using synthetic data. The project brings together batch processing, streaming events, quality checks, monitoring, Terraform, automated tests, and AI assisted diagnostics. This walkthrough presents results captured from a fresh verification on November fifteenth, twenty twenty six, in India time. It is a narrated evidence walkthrough, not a screen recording or an airline production system."
+    },
+    {
+      "eyebrow": "02 / Architecture",
+      "title": "Two paths. One monitoring layer.",
+      "rows": [
+        [
+          "Batch path",
+          "Generator → RAW → CLEAN → CURATED → quality gate"
+        ],
+        [
+          "Stream path",
+          "Producer → Pub/Sub → consumer → BigQuery"
+        ],
+        [
+          "Evidence path",
+          "Operational views → rules → Abacus → human review"
+        ]
+      ],
+      "note": "Batch and streaming have separate RAW tables. Streaming feeds monitoring views.",
+      "narration": "The architecture has two separate data paths. Batch events are generated in Python, loaded into BigQuery, normalized with SQL, and summarized into airport and route metrics. Streaming events travel through a Pub/Sub topic and subscription, then a Python consumer writes them to BigQuery. Operational views and batch run logs supply diagnostic evidence. The language model explains findings, but it cannot execute commands or change cloud resources."
+    },
+    {
+      "eyebrow": "03 / Batch acceptance",
+      "title": "A fresh batch passed every gate.",
+      "rows": [
+        [
+          "1,000 / 1,000",
+          "RAW and CLEAN records match"
+        ],
+        [
+          "10 / 10",
+          "Quality checks passed; 90 route metric rows"
+        ],
+        [
+          "17.99 seconds",
+          "Observed run: SUCCESS; outcome saved to BigQuery"
+        ]
+      ],
+      "note": "Run: 07d38343-eff8-473b-807e-81ff0291bcb7 • Started 2026-11-14 21:41:12 UTC",
+      "narration": "The fresh observed batch run processed one thousand records. Raw and clean row counts matched, all event identifiers were unique, and the ten quality checks passed. Those checks cover required values, route validity, nonnegative delays, normalized statuses, event types, and the derived metrics. The curated results contained ten airports and ninety routes. The observed run took about eighteen seconds, and its successful outcome was stored in BigQuery."
+    },
+    {
+      "eyebrow": "04 / Streaming acceptance",
+      "title": "Verify the events. Not just the count.",
+      "rows": [
+        [
+          "20 / 20",
+          "Exact published event IDs found in BigQuery"
+        ],
+        [
+          "0 / 0 / 0",
+          "Missing events / duplicate rows / wrong message IDs"
+        ],
+        [
+          "60 total",
+          "Monitoring: 60 unique events; 20 in the recent window"
+        ]
+      ],
+      "note": "Published and checked 2026-11-14 21:42 UTC • No exactly-once delivery claim",
+      "narration": "The streaming check published twenty new events and verified each event identifier against its actual Pub/Sub message identifier in BigQuery. All twenty matched. There were no missing events, duplicate rows, or wrong message identifiers in that verification run. This improves the earlier test, where unrelated traffic could increase the row count and cause a false pass. The monitoring snapshot then showed sixty total unique events, including the twenty just published."
+    },
+    {
+      "eyebrow": "05 / Infrastructure recovery",
+      "title": "The final audit found a real fault.",
+      "rows": [
+        [
+          "Found",
+          "Subscription missing; configured for 31-day expiry"
+        ],
+        [
+          "Repaired",
+          "Restored the missing subscription; disabled idle expiry"
+        ],
+        [
+          "0 / 0 / 0",
+          "Final Terraform plan: add / change / destroy"
+        ]
+      ],
+      "note": "Existing four datasets and topic preserved. Expiry is consistent with the gap; deletion cause was not audited.",
+      "narration": "The final audit found that the streaming subscription was missing. Its configuration allowed expiration after thirty one days of inactivity, which is consistent with the gap between demonstrations. The exact deletion cause was not independently established. Terraform restored only that missing subscription, with idle expiration disabled. The existing datasets and topic were preserved. A fresh plan after the repair reported zero additions, zero changes, and zero destructions."
+    },
+    {
+      "eyebrow": "06 / AI diagnostics",
+      "title": "A real explanation. Bounded claims.",
+      "rows": [
+        [
+          "Abacus",
+          "route-llm returned a validated structured response"
+        ],
+        [
+          "NO_FLAGS",
+          "Available metrics triggered no diagnostic rules"
+        ],
+        [
+          "Read-only",
+          "Explanations, hypotheses, checks and limitations"
+        ]
+      ],
+      "note": "Live diagnostic snapshot: 2026-11-14 21:43 UTC • A clean report is not proof of every component",
+      "narration": "The live diagnostic request used the fresh monitoring snapshot and completed successfully through Abacus Route L L M. The deterministic rules returned no flags, and the model produced a structured explanation with suggested checks and explicit limitations. That does not prove overall system health. The independent batch and exact event streaming tests provide the stronger evidence shown here. The optional OpenAI adapter is not required for this completed Abacus based portfolio."
+    },
+    {
+      "eyebrow": "07 / Delivery",
+      "title": "Built, verified, and ready to review.",
+      "rows": [
+        [
+          "58 tests",
+          "Offline behavior and failure-path tests passed"
+        ],
+        [
+          "GitHub CI",
+          "Python tests, dependency checks and Terraform validation"
+        ],
+        [
+          "Included",
+          "Source, evidence, runbook, transcript and demo video"
+        ]
+      ],
+      "note": "github.com/rishijay-k/skyflow-airline-dataops • On-demand portfolio scope; no continuous deployment",
+      "narration": "The finished portfolio includes fifty eight offline tests, GitHub continuous integration, infrastructure configuration, a runbook, timestamped acceptance evidence, and this narrated demo. Tests cover failures as well as successful paths, including rejected writes and false positive streaming verification. This is an on demand portfolio system. It does not claim continuous production deployment, exactly once delivery, or autonomous repair. The source and evidence are available in the SkyFlow airline DataOps repository on GitHub."
+    }
+  ]
+}

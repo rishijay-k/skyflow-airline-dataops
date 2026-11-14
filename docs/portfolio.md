@@ -23,7 +23,7 @@ Code: https://github.com/rishijay-k/skyflow-airline-dataops
 ## Showcase
 
 1. Review the README and latest Actions result on GitHub.
-2. Record the walkthrough in demo.md. No video has yet been produced by this repository preparation.
+2. Use the finished narrated demo attached to the v1.0.0 GitHub release, or present the optional live walkthrough in demo.md.
 3. Add the repository to your LinkedIn Featured section and Projects section. Use the description above and state that the data is synthetic.
 4. Attach the demo or architecture screenshot to the post. Publishing the LinkedIn post is a separate user action.
 

@@ -1,0 +1,55 @@
+{
+  "mode": "live",
+  "project": "skyflow-511113",
+  "location": "asia-south1",
+  "ai_status": "completed",
+  "snapshot": {
+    "collected_at": "2026-11-14T21:43:06.615281+00:00",
+    "errors": {},
+    "streaming": [
+      {
+        "total_streamed_events": 60,
+        "unique_events": 60,
+        "delayed_events": 12,
+        "delayed_event_percentage": 20.0,
+        "avg_delay_minutes_when_delayed": 73.08,
+        "avg_ingestion_latency_seconds": 1.171,
+        "events_last_5_minutes": 20,
+        "first_ingested_at": "2026-10-10 13:59:30.985909+00:00",
+        "latest_ingested_at": "2026-11-14 21:42:44.662412+00:00"
+      }
+    ],
+    "batch": [
+      {
+        "pipeline_name": "skyflow_batch_pipeline",
+        "status": "SUCCESS",
+        "started_at": "2026-11-14 21:41:12.838112+00:00",
+        "finished_at": "2026-11-14 21:41:30.825774+00:00",
+        "duration_seconds": 17.987662,
+        "records_processed": 1000
+      }
+    ]
+  },
+  "findings": [
+    {
+      "code": "NO_FLAGS",
+      "severity": "INFO",
+      "evidence": "Available metrics triggered no diagnostic rules.",
+      "action": "This does not verify unobserved components or the live end-to-end pipeline."
+    }
+  ],
+  "ai_explanation": {
+    "summary": "Live monitoring collected at 2026-11-14 21:43 UTC. Available metrics triggered no diagnostic rules, but this does not verify unobserved components or the live end-to-end pipeline.",
+    "hypotheses": [],
+    "suggested_checks": [
+      "Review which components and stages were covered by the available metrics.",
+      "If a live run was expected, check whether its end-to-end activity is visible in monitoring."
+    ],
+    "limitations": [
+      "No specific component-level or pipeline health evidence was provided.",
+      "The absence of diagnostic flags does not establish overall system health."
+    ]
+  },
+  "model": "route-llm",
+  "provider": "abacus"
+}

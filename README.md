@@ -4,7 +4,15 @@
 
 A portfolio project that processes synthetic airline events through batch and streaming pipelines on Google Cloud. Python handles generation, ingestion and operational logging; BigQuery provides RAW, CLEAN, CURATED and monitoring layers; Pub/Sub transports streaming events.
 
-This is an independent learning project using synthetic data. It is not affiliated with any airline. GitHub Actions runs offline tests and Terraform validation on pushes and pull requests. Read-only AI-assisted diagnostics are verified with Abacus RouteLLM; the optional OpenAI adapter has not passed live acceptance. Automated deployment remains planned.
+This is an independent learning project using synthetic data. It is not affiliated with any airline. GitHub Actions runs offline tests and Terraform validation on pushes and pull requests. Read-only AI-assisted diagnostics are verified with Abacus RouteLLM; the optional OpenAI adapter has not passed live acceptance. The completed scope is an on-demand portfolio; continuous production deployment is outside that scope.
+
+## Finished portfolio
+
+[Watch or download the narrated demo](https://github.com/rishijay-k/skyflow-airline-dataops/releases/download/v1.0.0/SkyFlow-demo.mp4) · [Acceptance evidence](docs/completion.md) · [Runbook](docs/runbook.md)
+
+![SkyFlow demo cover](docs/demo/cover.png)
+
+The video is an evidence walkthrough with computer-generated narration, not a live screen recording. The original portfolio scope is complete; documented production limitations remain.
 
 ## Architecture
 
@@ -36,10 +44,10 @@ The streaming table feeds operational views; it is not currently merged into the
 - Streaming: publish events to Pub/Sub, write them to BigQuery, and acknowledge messages after accepted writes.
 - Observability: record batch outcomes, duration, row counts and error messages in BigQuery.
 - Terraform: import four existing datasets plus the topic and subscription, with lifecycle deletion guards and a zero-change plan check.
-- Diagnostics: deterministic evidence checks plus structured Abacus explanations, with no automatic remediation. Demo and live-monitoring calls were confirmed in user-provided screenshots on November 15, 2026.
-- Tests: 51 offline cases covering generation, quality gates, write failures, acknowledgements, batch logging and streaming exit status.
+- Diagnostics: deterministic evidence checks plus structured Abacus explanations, with no automatic remediation. Fresh live acceptance on November 15, 2026 verified the Abacus response alongside independent batch and streaming checks.
+- Tests: 58 offline cases covering generation, quality gates, write failures, acknowledgements, batch logging and streaming exit status.
 
-The existing cloud pipeline was verified during development. Offline tests mock Google clients and do not prove current cloud health or execute the transformation SQL.
+Fresh cloud acceptance on November 15, 2026 passed 10/10 batch quality checks and verified all 20 newly published streaming events by event and message ID. See [the acceptance report](docs/completion.md). Offline tests mock Google clients and do not prove current cloud health or execute the transformation SQL.
 
 ## Local setup and tests
 
@@ -52,7 +60,7 @@ python -m pip install -r requirements.txt
 python -m pytest -q
 ```
 
-Expected: `51 passed`. The dependency file records the development environment. GitHub Actions installs it on a fresh Linux runner and checks dependency compatibility before running tests.
+Expected: `58 passed`. The dependency file records the development environment. GitHub Actions installs it on a fresh Linux runner and checks dependency compatibility before running tests.
 
 ## Existing Google Cloud environment
 
@@ -123,20 +131,20 @@ docs/             Verification and GitHub preparation notes
 - Message retries can produce duplicates; event IDs are used as insert IDs but there is no application-level exactly-once guarantee.
 - A failed streaming message is NACKed without a configured dead-letter handling workflow in this code.
 - `records_processed` records the final RAW row count, not an independently measured per-run count.
-- The streaming verification checks total row-count growth, not a unique test-run ID, so concurrent traffic can affect its result.
+- Streaming verification checks exact published event and message IDs. Concurrent consumers or existing backlog can still cause a bounded verification run to fail; failure evidence is retained.
 - Terraform adopts datasets and Pub/Sub resources; individual tables/views and IAM are not independently managed in this step.
-- Automated deployment and fresh-environment provisioning remain future work. Live OpenAI verification is pending credentials; diagnostics do not perform autonomous remediation.
+- Continuous deployment and fresh-environment provisioning are outside the accepted portfolio scope. Live OpenAI verification is pending credentials; diagnostics do not perform autonomous remediation.
 
 ## Demo and portfolio
 
-Follow the [demo script](docs/demo.md) for a short walkthrough and the [portfolio guide](docs/portfolio.md) for project wording. The code and documentation are ready to showcase; recording the video remains a user task. For architecture choices and verification boundaries, see [architecture](docs/architecture.md).
+Follow the [demo script](docs/demo.md) for a short walkthrough and the [portfolio guide](docs/portfolio.md) for project wording. The finished 3-minute-47-second narrated video, transcript and evidence are available in the [v1.0.0 release](https://github.com/rishijay-k/skyflow-airline-dataops/releases/tag/v1.0.0). For architecture choices and verification boundaries, see [architecture](docs/architecture.md).
 
 See [CI guide](docs/step28-ci.md) for automatic checks and their scope.
 
 ## Diagnostic workflow
 
-See [Step 29 setup](docs/step29-diagnostics.md). Run `python src/agent/diagnose.py --demo` for a synthetic report, or omit `--demo` to read live BigQuery monitoring. Add `--ai` after configuring a private API key to obtain OpenAI explanations.
+See [Step 29 setup](docs/step29-diagnostics.md). Run `python src/agent/diagnose.py --demo` for a synthetic report, or omit `--demo` to read live BigQuery monitoring. Use `--ai --provider abacus` after configuring the private Abacus key to obtain explanations. OpenAI is an optional adapter.
 
 ## Abacus alternative
 
-[Abacus setup](docs/step29-abacus.md) provides a separate provider and key setting. Use `python src/agent/diagnose.py --ai --provider abacus`. Demo and live-monitoring Abacus calls were confirmed in user-provided screenshots on November 15, 2026. OpenAI remains an optional, unverified live provider.
+[Abacus setup](docs/step29-abacus.md) provides a separate provider and key setting. Use `python src/agent/diagnose.py --ai --provider abacus`. A fresh live-monitoring Abacus call passed on November 15, 2026; [captured output](docs/evidence/diagnostics.json) is included. OpenAI remains an optional, unverified live provider.

@@ -1,0 +1,77 @@
+{
+  "verified_at_utc": "2026-11-14T21:45:04.779202+00:00",
+  "scope": "original on-demand SkyFlow portfolio; no continuous production deployment",
+  "project": "skyflow-511113",
+  "region": "asia-south1",
+  "batch": {
+    "pipeline_name": "skyflow_batch_pipeline",
+    "status": "SUCCESS",
+    "started_at": "2026-11-14 21:41:12.838112+00:00",
+    "finished_at": "2026-11-14 21:41:30.825774+00:00",
+    "duration_seconds": 17.987662,
+    "records_processed": 1000
+  },
+  "quality": {
+    "passed": 10,
+    "total": 10,
+    "airports": 10,
+    "routes": 90
+  },
+  "streaming": {
+    "project": "skyflow-511113",
+    "region": "asia-south1",
+    "started_at": "2026-11-14T21:42:37.174011+00:00",
+    "passed": true,
+    "expected_events": 20,
+    "matched_events": 20,
+    "missing_events": 0,
+    "duplicate_rows": 0,
+    "wrong_message_ids": 0,
+    "event_message_ids": {
+      "b9bdccc5-f450-41ba-bb5f-c0ecf1b38a65": "23369584847746377",
+      "54e7adbc-b096-42b3-9600-21bcb7953237": "21816329650632289",
+      "711959fb-b345-44af-9321-c687e911acf2": "21816250043081075",
+      "9bacb011-84ec-4f68-aaf1-896dfa603df8": "23314021820947213",
+      "86566e40-696d-4573-9df9-8a21931cc97b": "23313609413157642",
+      "56cef5c4-275a-4fbb-99b6-bc0403f94a67": "23267466298970196",
+      "058c929a-3cb5-4c54-bcc5-6b347728a7ec": "23267265550813571",
+      "056c57c8-bf6e-4d87-b61d-c1770f60c08b": "23369523319244324",
+      "d2e5df0c-c4a0-434b-be60-05db48b855c8": "22615500718888033",
+      "e33de501-85ae-4c88-a967-5cf09e800aa4": "23313954388246061",
+      "cdfb5ea3-1f23-4070-805e-1606494820bf": "23369482653230118",
+      "7917e9b1-4abc-4521-baed-a201103b14d9": "23267265575997906",
+      "c4880003-62c2-41dd-b5ab-a10320517b38": "23313897291712569",
+      "4eaaf6b7-58c3-4b89-a9d6-d79e9bd78d48": "23369528012591525",
+      "ce47015a-2ff7-47be-a560-e13ba28ca55f": "21815979623648094",
+      "52f8f36e-23b8-4d36-a8ae-d653f166213c": "23314013491701220",
+      "49513d61-7e18-4e9f-b321-d6c4733bc4ea": "23267280579420816",
+      "2e2f7eed-07b1-40b7-b83a-85fb21c22533": "23369527875437525",
+      "6755c05a-46a6-4cb2-bd2d-8dfced7c0cb6": "23267080023588776",
+      "df3076fb-41b8-4cef-b070-885526bba13e": "23314038634759319"
+    },
+    "finished_at": "2026-11-14T21:42:46.557384+00:00"
+  },
+  "terraform": {
+    "managed_resources": 6,
+    "add": 0,
+    "change": 0,
+    "destroy": 0,
+    "repair": "Restored confirmed-missing subscription with idle expiry disabled; no existing resources changed or destroyed"
+  },
+  "offline_tests": {
+    "passed": 58
+  },
+  "diagnostics": {
+    "provider": "abacus",
+    "model": "route-llm",
+    "status": "completed",
+    "collected_at": "2026-11-14T21:43:06.615281+00:00"
+  },
+  "limitations": [
+    "Snapshot acceptance, not an uptime guarantee",
+    "Pub/Sub and BigQuery inserts do not provide application-level exactly-once processing",
+    "Abacus explanations are read-only; no autonomous remediation",
+    "Optional OpenAI provider has no live acceptance evidence",
+    "CI validates code; it does not deploy continuously"
+  ]
+}

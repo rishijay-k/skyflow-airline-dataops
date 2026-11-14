@@ -1,0 +1,108 @@
+
+==================================================
+SKYFLOW BATCH PIPELINE
+==================================================
+Project:  skyflow-511113
+Location: asia-south1
+Started:  Sun Nov 15 03:11:12 IST 2026
+==================================================
+
+[1/6] Generating synthetic airline events...
+
+SKYFLOW AIRLINE EVENT GENERATOR
+-------------------------------
+Status: SUCCESS
+Events generated: 1000
+Output file: data/flight_events_1000.jsonl
+
+
+[2/6] Loading events into BigQuery RAW...
+
+SKYFLOW BIGQUERY RAW LOADER
+---------------------------
+Project: skyflow-511113
+Dataset: skyflow_raw
+Table: flight_events
+Location: asia-south1
+Source: data/flight_events_1000.jsonl
+
+Loading airline events...
+
+LOAD SUCCESSFUL
+---------------------------
+Rows loaded: 1000
+Columns: 9
+Destination: skyflow-511113.skyflow_raw.flight_events
+
+
+[3/6] Building CLEAN layer...
+
+Waiting on bqjob_r34d3fc0bb303140_000001a1dc01f5d5_1 ... (0s) Current status: RUNNING
+                                                                                     
+Waiting on bqjob_r34d3fc0bb303140_000001a1dc01f5d5_1 ... (0s) Current status: DONE   
+Replaced skyflow-511113.skyflow_clean.flight_events_clean
+
+
+[4/6] Building CURATED route metrics...
+
+Waiting on bqjob_r5218ca45b3e6da92_000001a1dc020049_1 ... (0s) Current status: RUNNING
+                                                                                      
+Waiting on bqjob_r5218ca45b3e6da92_000001a1dc020049_1 ... (0s) Current status: DONE   
+Replaced skyflow-511113.skyflow_curated.route_operational_metrics
+
+
+[5/6] Building CURATED airport metrics...
+
+Waiting on bqjob_r51d889a97f532651_000001a1dc020b2a_1 ... (0s) Current status: RUNNING
+                                                                                      
+Waiting on bqjob_r51d889a97f532651_000001a1dc020b2a_1 ... (0s) Current status: DONE   
+Replaced skyflow-511113.skyflow_curated.airport_operational_metrics
+
+
+[6/6] Running automated data-quality gate...
+
+SKYFLOW AUTOMATED DATA QUALITY
+-----------------------------------------------
+PASS | RAW table contains data             | 1000
+PASS | RAW and CLEAN row counts match      | 1000 / 1000
+PASS | Event IDs are unique                | 1000
+PASS | Critical fields are complete        | 0
+PASS | Routes have different airports      | 0
+PASS | Delay values are non-negative       | 0
+PASS | CLEAN statuses are consistent       | 0
+PASS | Event types are valid               | 0
+PASS | Airport metrics are complete        | 10
+PASS | Route metrics exist                 | 90
+-----------------------------------------------
+Checks passed: 10/10
+
+DATA QUALITY STATUS: PASS
+SkyFlow data is safe to continue.
+
+
+==================================================
+SKYFLOW BATCH PIPELINE: SUCCESS
+==================================================
+RAW:       skyflow_raw.flight_events
+CLEAN:     skyflow_clean.flight_events_clean
+CURATED:   route_operational_metrics
+CURATED:   airport_operational_metrics
+DQ STATUS: PASS
+Duration:  17 seconds
+Finished:  Sun Nov 15 03:11:29 IST 2026
+==================================================
+
+
+SKYFLOW OBSERVED BATCH RUN
+------------------------------------
+Run ID: 07d38343-eff8-473b-807e-81ff0291bcb7
+Started: 2026-11-14 21:41:12.838112+00:00
+------------------------------------
+
+
+------------------------------------
+Run status: SUCCESS
+Records processed: 1000
+Observability record: SAVED
+------------------------------------
+

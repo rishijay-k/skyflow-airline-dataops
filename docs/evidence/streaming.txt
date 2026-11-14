@@ -1,0 +1,3 @@
+PASS: existing topic, subscription and table found
+Published 20 uniquely identified synthetic events
+PASS: all 20 exact event IDs and Pub/Sub message IDs verified; no duplicates

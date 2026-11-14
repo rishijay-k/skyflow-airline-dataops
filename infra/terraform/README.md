@@ -73,3 +73,7 @@ If verification reports changes, stop and inspect `verified-plan.log`. Do not ap
 ## Private owner configuration
 
 The existing owner email now comes from `var.dataset_owner_email`. This Mac has the correct value in the Git-ignored `terraform.tfvars`. For a deliberate fresh setup, copy `terraform.tfvars.example` to `terraform.tfvars` and supply the actual existing owner before import or plan. Do not commit the private file. This refactor preserves the existing access entries.
+
+## November 15 portfolio recovery
+
+The original subscription was confirmed missing during final acceptance. A reviewed plan restored only that subscription; no existing resources were modified or destroyed. Its idle expiration is now disabled (`ttl = ""`) so an on-demand demo does not lose the subscription between sessions. The final plan again returned zero changes. Terraform lifecycle guards do not prevent expiration or deletion outside Terraform. See [the acceptance record](../../docs/completion.md).

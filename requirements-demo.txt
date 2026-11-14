@@ -1,0 +1,3 @@
+# Optional macOS video authoring; separate from runtime and CI.
+Pillow==11.3.0
+imageio-ffmpeg==0.6.0

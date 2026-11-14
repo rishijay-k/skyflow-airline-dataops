@@ -1,4 +1,29 @@
-# SkyFlow demo — 3 to 5 minutes
+# SkyFlow finished demo
+
+The finished **3-minute-47-second MP4** is attached to the [v1.0.0 release](https://github.com/rishijay-k/skyflow-airline-dataops/releases/tag/v1.0.0). It uses captured live acceptance results and macOS computer-generated narration. It is not a recording of a live terminal session.
+
+- [Download video](https://github.com/rishijay-k/skyflow-airline-dataops/releases/download/v1.0.0/SkyFlow-demo.mp4)
+- [Read transcript](demo/transcript.md)
+- [Chapter index](demo/chapters.vtt)
+- [Acceptance evidence](completion.md)
+
+## Regenerate the narrated video on macOS
+
+This uses a separate media environment and makes no cloud calls.
+
+```bash
+cd ~/Projects/skyflow
+python3 -m venv /tmp/skyflow-demo-venv
+/tmp/skyflow-demo-venv/bin/python -m pip install -r requirements-demo.txt
+/tmp/skyflow-demo-venv/bin/python scripts/build_demo.py --output /tmp/skyflow-demo
+open /tmp/skyflow-demo/SkyFlow-demo.mp4
+```
+
+The storyboard is tied to the recorded November 15 acceptance evidence. Update it with newly verified results before making claims about a later run.
+
+## Optional live presentation
+
+The following walkthrough is for presenting the project interactively; the finished media does not require you to record it again.
 
 ## 1. Explain the problem (30 seconds)
 
@@ -16,7 +41,7 @@ source .venv/bin/activate
 python -m pytest -q
 ```
 
-Expected: 51 tests pass. Then open the latest successful run under GitHub Actions. Explain that these are offline tests with mocked cloud/model calls plus Terraform validation, not a full live integration test.
+Expected: 58 tests pass. Then open the latest successful run under GitHub Actions. Explain that these are offline tests with mocked cloud/model calls plus Terraform validation, not a full live integration test.
 
 ## 3. Show Terraform adoption (45 seconds)
 
@@ -68,6 +93,6 @@ bash scripts/verify_streaming_pipeline.sh
 
 Do not claim fresh end-to-end success unless these actually pass. The diagnostics screenshots alone do not establish that.
 
-## Recording
+## Optional screen recording
 
-Record a selected screen area with macOS screen recording (Shift-Command-5). Keep API-key pages, `.env`, Terraform state, personal tabs and notifications out of frame. Start with the README, show the commands above, and finish on the CI result. Save a 3–5 minute video and add its link to the README once uploaded. A recording has not been created by this guide.
+Record a selected screen area with macOS screen recording (Shift-Command-5). Keep API-key pages, `.env`, Terraform state, personal tabs and notifications out of frame. Start with the README, show the commands above, and finish on the CI result. Save a 3–5 minute video and add its link to the README once uploaded. The release already includes the narrated evidence video; this is an optional separate screen recording.

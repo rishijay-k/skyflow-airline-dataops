@@ -237,6 +237,7 @@ resource "google_pubsub_subscription" "flight_events" {
   tags                         = null
   topic                        = google_pubsub_topic.flight_events.id
   expiration_policy {
-    ttl = "2678400s"
+    # Keep the on-demand portfolio subscription between demo sessions.
+    ttl = ""
   }
 }

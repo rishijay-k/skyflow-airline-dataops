@@ -23,3 +23,7 @@ GitHub Actions runs Python tests, dependency checks, shell syntax checks and Ter
 - The latest CI run provides commit-specific offline validation. See the repository Actions page.
 
 These are point-in-time results, not a claim of continuous production uptime. Screenshot-based AI acceptance does not imply that new flight events were generated that day.
+
+## Final portfolio acceptance
+
+Fresh batch, exact-ID streaming, zero-change Terraform and live Abacus checks passed on November 15, 2026 (India time). See [completion](completion.md) and [captured evidence](evidence/acceptance.json). The missing subscription was restored with expiry disabled; existing datasets and topic were preserved. The narrated demo is included in the v1.0.0 release.
