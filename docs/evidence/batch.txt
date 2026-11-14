@@ -38,24 +38,24 @@ Destination: skyflow-511113.skyflow_raw.flight_events
 [3/6] Building CLEAN layer...
 
 Waiting on bqjob_r34d3fc0bb303140_000001a1dc01f5d5_1 ... (0s) Current status: RUNNING
-                                                                                     
-Waiting on bqjob_r34d3fc0bb303140_000001a1dc01f5d5_1 ... (0s) Current status: DONE   
+
+Waiting on bqjob_r34d3fc0bb303140_000001a1dc01f5d5_1 ... (0s) Current status: DONE
 Replaced skyflow-511113.skyflow_clean.flight_events_clean
 
 
 [4/6] Building CURATED route metrics...
 
 Waiting on bqjob_r5218ca45b3e6da92_000001a1dc020049_1 ... (0s) Current status: RUNNING
-                                                                                      
-Waiting on bqjob_r5218ca45b3e6da92_000001a1dc020049_1 ... (0s) Current status: DONE   
+
+Waiting on bqjob_r5218ca45b3e6da92_000001a1dc020049_1 ... (0s) Current status: DONE
 Replaced skyflow-511113.skyflow_curated.route_operational_metrics
 
 
 [5/6] Building CURATED airport metrics...
 
 Waiting on bqjob_r51d889a97f532651_000001a1dc020b2a_1 ... (0s) Current status: RUNNING
-                                                                                      
-Waiting on bqjob_r51d889a97f532651_000001a1dc020b2a_1 ... (0s) Current status: DONE   
+
+Waiting on bqjob_r51d889a97f532651_000001a1dc020b2a_1 ... (0s) Current status: DONE
 Replaced skyflow-511113.skyflow_curated.airport_operational_metrics
 
 
@@ -105,4 +105,3 @@ Run status: SUCCESS
 Records processed: 1000
 Observability record: SAVED
 ------------------------------------
-
